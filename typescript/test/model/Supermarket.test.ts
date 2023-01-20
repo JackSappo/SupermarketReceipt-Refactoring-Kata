@@ -15,6 +15,9 @@ type Approvals = { verify: (a: string) => void }
 describe('Supermarket', function () {
 
   approvals.mocha()
+  approvals.configure({
+    errorOnStaleApprovedFiles: false
+  })
 
   let catalog: SupermarketCatalog;
   let teller: Teller;

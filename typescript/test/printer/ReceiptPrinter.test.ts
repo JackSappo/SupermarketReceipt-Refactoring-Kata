@@ -10,6 +10,9 @@ type Approvals = { verify: (a: string) => void }
 describe('ReceiptPrinter', () => {
 
   approvals.mocha()
+  approvals.configure({
+    errorOnStaleApprovedFiles: false
+  })
 
   let toothbrush: Product
   let apples: Product

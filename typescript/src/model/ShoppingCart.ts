@@ -88,4 +88,16 @@ export class ShoppingCart {
 
     }
   }
+
+  // TODO: Support checking for quantities >1, ex. "2 apples and 1 banana"
+  // TODO: Improve time complexity
+  handleBundleOffers(receipt: Receipt, bundleOffers: any, catalog: SupermarketCatalog): void {
+    const productQuantities = this.productQuantities();
+
+    bundleOffers.forEach((bundleOffer: any) => {
+      if (bundleOffer.products.every((product: any) => !!productQuantities[product])) {
+        receipt.addDiscount(bundleOffer.discount);
+      }
+    });
+  }
 }

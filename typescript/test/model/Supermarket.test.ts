@@ -89,6 +89,19 @@ describe('Supermarket', function () {
     this.verify(new ReceiptPrinter(40).printReceipt(receipt));
   })
 
+  describe('bundled offers', function () {
+    it('discounts bundled offers', function () {
+      const flatRateDiscount = .50;
+
+      theCart.addItem(toothbrush);
+      theCart.addItem(rice);
+      teller.addBundleOffer([toothbrush, rice], flatRateDiscount);
+
+      const receipt = teller.checksOutArticlesFrom(theCart);
+      expect(receipt.getDiscounts()).lengthOf(1);
+      expect(receipt.getDiscounts()[0]).to.equal(flatRateDiscount);
+    })
+  });
 
   it('loose_weight_product', function (this: any) {
     theCart.addItemQuantity(apples, .5);

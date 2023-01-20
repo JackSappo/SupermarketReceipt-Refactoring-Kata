@@ -6,10 +6,18 @@ import { Offer } from "./Offer"
 import { SpecialOfferType } from "./SpecialOfferType"
 
 export class Teller {
-
   private offers: OffersByProduct = {};
+  private bundleOffers: any[] = [];
 
-  public constructor(private readonly catalog: SupermarketCatalog) {
+  public constructor(
+    private readonly catalog: SupermarketCatalog
+  ) {}
+
+  public addBundleOffer(products: Product[], flatDiscount: any): void {
+    this.bundleOffers.push({
+      products: products.map(product => product.name),
+      discount: flatDiscount
+    });
   }
 
   public addSpecialOffer(offerType: SpecialOfferType, product: Product, argument: number): void {
@@ -27,6 +35,7 @@ export class Teller {
       receipt.addProduct(p, quantity, unitPrice, price);
     }
     theCart.handleOffers(receipt, this.offers, this.catalog);
+    theCart.handleBundleOffers(receipt, this.bundleOffers, this.catalog);
 
     return receipt;
   }
